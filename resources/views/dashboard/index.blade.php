@@ -1,5 +1,7 @@
 @section('title', 'Dashboard')
 
+@extends('template')
+
 @section('content')
 <section class="section-search-patient pt-4">
   <div class="container">
