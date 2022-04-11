@@ -9,7 +9,7 @@
   </head>
 <body>
   <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="col-10 col-sm-5 col-md-4 py-3 login-form">
+    <div class="col-10 col-sm-5 col-md-5 col-lg-3 py-3 login-form">
       <h1 class="text-center mb-3">Brand Name</h1>
       <div class="card">
         <div class="card-header">
