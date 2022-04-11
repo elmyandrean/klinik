@@ -5,24 +5,28 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-user-plus"></i> Add</a>
+          <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-user-plus"></i> Add</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-user-pen"></i> Edit</a>
+          <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-user-pen"></i> Edit</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-users-viewfinder"></i> Studio</a>
+          <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-users-viewfinder"></i> Studio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+          <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
         </li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-gear"></i> Setting</a>
+          <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-gear"></i> Setting</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+          <form action="{{ route('logout_action') }}" method="post">
+            @csrf
+            <button type="submit" class="nav-link btn-logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+          </form>
+          {{-- <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-right-from-bracket"></i> Logout</a> --}}
         </li>
       </ul>
     </div>
