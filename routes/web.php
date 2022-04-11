@@ -20,6 +20,9 @@ Route::middleware('auth')->group(function(){
   })->name('dashboard');
 });
 
+Route::GET('/', function(){
+  return view('auth.login_starter');
+})->name('login_starter');
 Route::GET('/login', [AuthController::class, 'login'])->name('login');
 Route::POST('/login_action', [AuthController::class, 'login_action'])->name('login_action');
 Route::POST('/logout_action', [AuthController::class, 'logout_action'])->name('logout_action');

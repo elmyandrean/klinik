@@ -9,7 +9,7 @@
   </head>
 <body>
   <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="col-10 col-sm-5 col-md-4 py-3">
+    <div class="col-10 col-sm-5 col-md-4 py-3 login-form">
       <h1 class="text-center mb-3">Brand Name</h1>
       <div class="card">
         <div class="card-header">
@@ -37,7 +37,7 @@
             </div>
             <div class="mb-3 row">
               <div class="offset-sm-4 col-sm-8">
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-secondary btn-login" onclick="submitLoginForm()">Login</button>
               </div>
             </div>
           </form>
@@ -45,5 +45,15 @@
       </div>
     </div> 
   </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  @include('_partials._scripts')
+
+  <script>
+    function submitLoginForm(){
+      $('.btn-login').html('Waiting ...');
+      $('.btn-login').attr('disabled');
+    }
+  </script>
 </body>
 </html>
