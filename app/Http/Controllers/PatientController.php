@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PatienController extends Controller
+class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +23,7 @@ class PatienController extends Controller
      */
     public function create()
     {
-        //
+        return view('patients.create');
     }
 
     /**

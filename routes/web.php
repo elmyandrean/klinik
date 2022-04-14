@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PatientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +19,14 @@ Route::middleware('auth')->group(function(){
   Route::GET('dashboard', function(){
     return view('dashboard.index');
   })->name('dashboard');
+  Route::resource('patients', PatientController::class);
+  Route::POST('/logout_action', [AuthController::class, 'logout_action'])->name('logout_action');
 });
 
-Route::GET('/', function(){
-  return view('auth.login_starter');
-})->name('login_starter');
-Route::GET('/login', [AuthController::class, 'login'])->name('login');
-Route::POST('/login_action', [AuthController::class, 'login_action'])->name('login_action');
-Route::POST('/logout_action', [AuthController::class, 'logout_action'])->name('logout_action');
+Route::middleware('guest')->group(function(){
+  Route::GET('/', function(){
+    return view('auth.login_starter');
+  })->name('login_starter');
+  Route::GET('/login', [AuthController::class, 'login'])->name('login');
+  Route::POST('/login_action', [AuthController::class, 'login_action'])->name('login_action');
+});
