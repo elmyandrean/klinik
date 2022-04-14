@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PatientController extends Controller
 {
@@ -34,7 +35,20 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:5',
+            'gender' => 'required',
+            'birth_date' => 'required|date',
+            'personal_id' => 'nullable|digits_between:12,20',
+            'phone' => 'nullable|digits_between:10,20',
+            'email' => 'nullable|email',
+            'address' => 'nullable|alpha_num',
+        ]);
+
+        if($validator->fails()){
+            return back()->withErrors($validator)->withInput();
+        }
+
     }
 
     /**
