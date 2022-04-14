@@ -16,7 +16,7 @@
           <h3 class="text-center">Login Page</h3>
         </div>
         <div class="card-body">
-          <form action="{{ route('login_action') }}" method="POST">
+          <form action="{{ route('login_action') }}" method="POST" onsubmit="submitLoginForm();">
             @csrf
             <div class="mb-3 row">
               <label for="username" class="col-sm-4 col-form-label">Username</label>
@@ -37,7 +37,7 @@
             </div>
             <div class="mb-3 row">
               <div class="offset-sm-4 col-sm-8">
-                <button type="submit" class="btn btn-secondary btn-login" onclick="submitLoginForm()">Login</button>
+                <button type="submit" class="btn btn-secondary btn-login">Login</button>
               </div>
             </div>
           </form>
@@ -52,7 +52,7 @@
   <script>
     function submitLoginForm(){
       $('.btn-login').html('Waiting ...');
-      $('.btn-login').attr('disabled');
+      $('.btn-login').attr('disabled', true);
     }
   </script>
 </body>
