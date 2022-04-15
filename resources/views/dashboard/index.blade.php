@@ -77,9 +77,22 @@
             </tr>
           </thead>
           <tbody>
+            @if($patients)
+            @foreach($patients as $patient)
+            <tr>
+              <td>{{ $patient->personal_id }}</td>
+              <td>{{ $patient->name }}</td>
+              <td>{{ $patient->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+              <td>{{ date('d-m-Y', strtotime($patient->birth_date)) }}</td>
+              <td></td>
+              <td></td>
+            </tr>
+            @endforeach
+            @else
             <tr>
               <td colspan="6" class="text-center">Data Belum Ada</td>
             </tr>
+            @endif
           </tbody>
         </table>
       </div>

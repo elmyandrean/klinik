@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +17,7 @@ use App\Http\Controllers\PatientController;
 */
 
 Route::middleware('auth')->group(function(){
-  Route::GET('dashboard', function(){
-    return view('dashboard.index');
-  })->name('dashboard');
+  Route::GET('dashboard', [DashboardController::class, 'index'])->name('dashboard');
   Route::resource('patients', PatientController::class);
   Route::POST('/logout_action', [AuthController::class, 'logout_action'])->name('logout_action');
 });
