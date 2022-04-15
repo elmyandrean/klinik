@@ -15,14 +15,14 @@
             @csrf
             <div class="mb-3 row">
               <label for="name" class="col-sm-3 col-md-2 col-form-label">Name <span class="text-danger">*</span></label>
-              <div class="col-sm-5">
+              <div class="col-9 col-lg-5">
                 <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" autofocus>
                 @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
               </div>
             </div>
             <div class="mb-3 row align-items-center">
               <label for="gender" class="col-sm-3 col-md-2 col-form-label">Gender <span class="text-danger">*</span></label>
-              <div class="col-sm-5">
+              <div class="col-9 col-lg-5">
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="gender" id="genderL" value="L" {{ old('gender') == 'L' ? 'checked' : '' }}>
                   <label class="form-check-label" for="genderL">Laki-laki</label>
@@ -36,35 +36,35 @@
             </div>
             <div class="mb-3 row">
               <label for="birthDate" class="col-sm-3 col-md-2 col-form-label">Birth Date <span class="text-danger">*</span></label>
-              <div class="col-sm-5">
+              <div class="col-9 col-lg-5">
                 <input type="date" name="birth_date" id="birthDate" class="form-control @error('birth_date') is-invalid @enderror" value="{{ old('birth_date') }}">
                 @error('birth_date') <div class="invalid-feedback">{{ $message }}</div> @enderror
               </div>
             </div>
             <div class="mb-3 row">
               <label for="personal_id" class="col-sm-3 col-md-2 col-form-label">Personal ID</label>
-              <div class="col-sm-5">
+              <div class="col-9 col-lg-5">
                 <input type="text" name="personal_id" id="personal_id" class="form-control @error('personal_id') is-invalid @enderror" value="{{ old('personal_id') }}">
                 @error('personal_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
               </div>
             </div>
             <div class="mb-3 row">
               <label for="phone" class="col-sm-3 col-md-2 col-form-label">Phone</label>
-              <div class="col-sm-5">
+              <div class="col-9 col-lg-5">
                 <input type="text" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}">
                 @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
               </div>
             </div>
             <div class="mb-3 row">
               <label for="email" class="col-sm-3 col-md-2 col-form-label">Email</label>
-              <div class="col-sm-5">
+              <div class="col-9 col-lg-5">
                 <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
                 @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
               </div>
             </div>
             <div class="mb-3 row">
               <label for="address" class="col-sm-3 col-md-2 col-form-label">Address</label>
-              <div class="col-sm-5">
+              <div class="col-9 col-lg-5">
                 <textarea name="address" id="address" cols="10" class="form-control @error('address') is-invalid @enderror">{{ old('address') }}</textarea>
                 @error('address') <div class="invalid-feedback">{{ $message }}</div> @enderror
               </div>

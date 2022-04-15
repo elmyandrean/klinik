@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Patient;
+use Illuminate\Support\Facades\DB;
 
 class PatientController extends Controller
 {
@@ -35,20 +37,25 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|min:5',
-            'gender' => 'required',
-            'birth_date' => 'required|date',
-            'personal_id' => 'nullable|digits_between:12,20',
-            'phone' => 'nullable|digits_between:10,20',
-            'email' => 'nullable|email',
-            'address' => 'nullable|alpha_num',
-        ]);
+      $validator = Validator::make($request->all(), [
+          'name' => 'required|min:5',
+          'gender' => 'required',
+          'birth_date' => 'required|date',
+          'personal_id' => 'nullable|digits_between:12,20',
+          'phone' => 'nullable|digits_between:10,20',
+          'email' => 'nullable|email',
+          'address' => 'nullable',
+      ]);
 
-        if($validator->fails()){
-            return back()->withErrors($validator)->withInput();
-        }
+      if($validator->fails()){
+          return back()->withErrors($validator)->withInput();
+      }
 
+      $validated = $validator->safe()->all();
+
+      Patient::insert($validated);
+
+      return redirect()->route('dashboard');
     }
 
     /**
