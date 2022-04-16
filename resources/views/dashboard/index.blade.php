@@ -65,7 +65,7 @@
   <div class="container">
     <div class="card">
       <div class="card-body">
-        <table class="table table-hover">
+        <table class="table">
           <thead>
             <tr>
               <th>Personal ID</th>
@@ -74,18 +74,23 @@
               <th>Date of Birth</th>
               <th>Treatmen / Notes</th>
               <th>Checkin Today</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             @if($patients)
             @foreach($patients as $patient)
             <tr>
-              <td>{{ $patient->personal_id }}</td>
-              <td>{{ $patient->name }}</td>
-              <td>{{ $patient->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
-              <td>{{ date('d-m-Y', strtotime($patient->birth_date)) }}</td>
-              <td></td>
-              <td></td>
+              <td class="align-middle">{{ $patient->personal_id }}</td>
+              <td class="align-middle">{{ $patient->name }}</td>
+              <td class="align-middle">{{ $patient->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+              <td class="align-middle">{{ date('d-m-Y', strtotime($patient->birth_date)) }}</td>
+              <td class="align-middle"></td>
+              <td class="align-middle"></td>
+              <td class="align-middle">
+                <button class="btn btn-sm btn-primary" data-bs-toggle="tooltip" title="Treatmen / Photo"><i class="fas fa-camera"></i></button>
+                <a class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit Patient"><i class="fas fa-edit"></i></a>
+              </td>
             </tr>
             @endforeach
             @else
@@ -99,4 +104,13 @@
     </div>
   </div>
 </section>
+@endsection
+
+@section('scripts')
+<script>
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+</script>
 @endsection
