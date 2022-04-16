@@ -77,7 +77,9 @@ class PatientController extends Controller
      */
     public function edit($id)
     {
-        //
+        $patient = Patient::find($id);
+
+        return view('patients.edit', ['patient' => $patient]);
     }
 
     /**
