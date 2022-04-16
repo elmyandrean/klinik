@@ -91,7 +91,25 @@ class PatientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $validator = Validator::make($request->all(), [
+        'name' => 'required|min:5',
+        'gender' => 'required',
+        'birth_date' => 'required|date',
+        'personal_id' => 'nullable|digits_between:12,20',
+        'phone' => 'nullable|digits_between:10,20',
+        'email' => 'nullable|email',
+        'address' => 'nullable',
+      ]);
+
+      if($validator->fails()){
+        return back()->withErrors($validator)->withInput();
+      }
+
+      $validated = $validator->safe()->all();
+
+      Patient::where('id', $id)->update($validated);
+
+      return redirect()->route('dashboard');
     }
 
     /**
