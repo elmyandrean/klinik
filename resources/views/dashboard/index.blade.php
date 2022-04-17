@@ -6,52 +6,60 @@
 <section class="section-search-patient pt-4">
   <div class="container">
     <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="card">
           <div class="card-header fw-bold">Search Patient</div>
           <div class="card-body">
             <form action="#" method="POST">
               @csrf
-              <div class="mb-3 row">
-                <label for="patien_id" class="col-sm-3 col-form-label">Patient ID</label>
-                <div class="col-sm-9">
-                  <input type="text" name="patient_id" id="patient_id" class="form-control">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3 row">
+                    <label for="patien_id" class="col-sm-3 col-form-label">Patient ID</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="patient_id" id="patient_id" class="form-control">
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="name" class="col-sm-3 col-form-label">Name</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="name" id="name" class="form-control">
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="visit_date" class="col-sm-3 col-form-label">Visit Date</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="visit_date" id="visit_date" class="form-control">
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="mb-3 row">
-                <label for="name" class="col-sm-3 col-form-label">Name</label>
-                <div class="col-sm-9">
-                  <input type="text" name="name" id="name" class="form-control">
+                <div class="col-md-6">
+                  <div class="mb-3 row">
+                    <label for="registration_date" class="col-sm-3 col-form-label">Reg. Date</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="registration_date" id="registration_date" class="form-control">
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="shot_date" class="col-sm-3 col-form-label">Shot Date</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="shot_date" id="shot_date" class="form-control">
+                    </div>
+                  </div>
+                  <div class="mb-3 row">
+                    <label for="personal_id" class="col-sm-3 col-form-label">Personal ID</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="personal_id" id="personal_id" class="form-control">
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="mb-3 row">
-                <label for="visit_date" class="col-sm-3 col-form-label">Visit Date</label>
-                <div class="col-sm-9">
-                  <input type="text" name="visit_date" id="visit_date" class="form-control">
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <label for="registration_date" class="col-sm-3 col-form-label">Reg. Date</label>
-                <div class="col-sm-9">
-                  <input type="text" name="registration_date" id="registration_date" class="form-control">
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <label for="shot_date" class="col-sm-3 col-form-label">Shot Date</label>
-                <div class="col-sm-9">
-                  <input type="text" name="shot_date" id="shot_date" class="form-control">
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <label for="personal_id" class="col-sm-3 col-form-label">Personal ID</label>
-                <div class="col-sm-9">
-                  <input type="text" name="personal_id" id="personal_id" class="form-control">
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <div class="offset-sm-3 col-sm-9">
-                  <button class="btn btn-primary" type="submit">Search</button>
-                  <button class="btn btn-secondary text-white">Cancel</button>
+                <div class="col-md-6">
+                  <div class="mb-3 row">
+                    <div class="offset-sm-3 col-sm-9">
+                      <button class="btn btn-primary" type="submit">Search</button>
+                      <button class="btn btn-secondary text-white">Cancel</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>
@@ -88,7 +96,7 @@
               <td class="align-middle"></td>
               <td class="align-middle"></td>
               <td class="align-middle">
-                <button class="btn btn-sm btn-primary" data-bs-toggle="tooltip" title="Treatmen / Photo"><i class="fas fa-camera"></i></button>
+                <a href="{{ url('treatments/create?patient_id='.$patient->id) }}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" title="Treatmen / Photo"><i class="fas fa-camera"></i></a>
                 <a href="{{ route('patients.edit', $patient->id) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit Patient"><i class="fas fa-edit"></i></a>
               </td>
             </tr>
