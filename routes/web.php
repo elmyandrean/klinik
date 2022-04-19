@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\TreatmentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PhotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,16 +19,19 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::middleware('auth')->group(function(){
-  Route::GET('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+  Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
   Route::resource('patients', PatientController::class);
   Route::resource('treatments', TreatmentController::class);
-  Route::POST('/logout_action', [AuthController::class, 'logout_action'])->name('logout_action');
+  Route::post('/logout_action', [AuthController::class, 'logout_action'])->name('logout_action');
+  Route::post('/photos/upload_images', [PhotoController::class, 'upload_images'])->name('photos.upload_images');
+  Route::get('/photos/get_photo_no_threatment', [PhotoController::class, 'get_photo_no_threatment'])->name('photos.get_photo_no_threatment');
+  Route::delete('/photos/delete_image', [PhotoController::class, 'delete_image'])->name('photos.delete_image');
 });
 
 Route::middleware('guest')->group(function(){
-  Route::GET('/', function(){
+  Route::get('/', function(){
     return view('auth.login_starter');
   })->name('login_starter');
-  Route::GET('/login', [AuthController::class, 'login'])->name('login');
-  Route::POST('/login_action', [AuthController::class, 'login_action'])->name('login_action');
+  Route::get('/login', [AuthController::class, 'login'])->name('login');
+  Route::post('/login_action', [AuthController::class, 'login_action'])->name('login_action');
 });

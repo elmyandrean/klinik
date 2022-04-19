@@ -9,47 +9,66 @@
           {{ $patient->name .' ( '.($patient->gender == 'L' ? 'Male' : 'Female').' ) '. date('d-m-Y', strtotime($patient->birth_date)) }}
         </div>
         <div class="card-body">
-          <form action="#" method="POST">
+          <form action="{{ route('treatments.store') }}" method="POST">
             @csrf
             <div class="row">
-              <div class="col-md-6">
+              <input type="hidden" name="patient_id" value="{{ $patient->id }}">
+              <div class="col-md-4">
                 <div class="mb-3 row">
-                  <label for="treatment" class="col-sm-3 col-form-label">Treatment</label>
+                  <label for="treatment" class="col-sm-4 col-form-label @error('treatment') is-invalid @enderror">Treatment</label>
                   <div class="col-sm-8">
                     <select name="treatment" id="treatment" class="form-select">
-                      <option value="#">Treatment 1</option>
-                      <option value="#">Treatment 1</option>
-                      <option value="#">Treatment 1</option>
-                      <option value="#">Treatment 1</option>
-                      <option value="#">Treatment 1</option>
+                      <option value="treatment 1">Treatment 1</option>
+                      <option value="treatment 2">Treatment 2</option>
+                      <option value="treatment 3">Treatment 3</option>
+                      <option value="treatment 4">Treatment 4</option>
+                      <option value="treatment 5">Treatment 5</option>
                     </select>
+                    @error('treatment') <div class="invalid-feedback">{{ $message }}</div> @enderror
                   </div>
                 </div>
                 <div class="mb-3 row">
-                  <label for="diagnosis" class="col-sm-3 col-form-label">Diagnosis</label>
+                  <label for="diagnosis" class="col-sm-4 col-form-label">Diagnosis</label>
                   <div class="col-sm-8">
-                    <select name="diagnosis" id="diagnosis" class="form-select">
-                      <option value="#">Diagnosis 1</option>
-                      <option value="#">Diagnosis 1</option>
-                      <option value="#">Diagnosis 1</option>
-                      <option value="#">Diagnosis 1</option>
-                      <option value="#">Diagnosis 1</option>
+                    <select name="diagnosis" id="diagnosis" class="form-select @error('diagnosis') is-invalid @enderror">
+                      <option value="diagnosis 1">Diagnosis 1</option>
+                      <option value="diagnosis 2">Diagnosis 2</option>
+                      <option value="diagnosis 3">Diagnosis 3</option>
+                      <option value="diagnosis 4">Diagnosis 4</option>
+                      <option value="diagnosis 5">Diagnosis 5</option>
                     </select>
+                    @error('diagnosis') <div class="invalid-feedback">{{ $message }}</div> @enderror
                   </div>
                 </div>
                 <div class="mb-3 row">
-                  <label for="patien_id" class="col-sm-3 col-form-label">Notes</label>
+                  <label for="patien_id" class="col-sm-4 col-form-label">Notes</label>
                   <div class="col-sm-8">
-                    <textarea name="notes" id="notes" rows="5" class="form-control"></textarea>
+                    <textarea name="notes" id="notes" rows="5" class="form-control @error('notes') is-invalid @enderror"></textarea>
+                    @error('notes') <div class="invalid-feedback">{{ $message }}</div> @enderror
                   </div>
                 </div>
               </div>
-              <div class="col-md-6 d-flex flex-column align-items-center">
+              <div class="col-md-8 d-flex flex-column align-items-center">
                 <div id="video-webcam" class="mb-3"></div>
                 <div class="text-center">
-                  <button class="btn btn-secondary" onclick="take_snapshot()">Take a picture</button>
+                  <button class="btn btn-secondary" onclick="take_snapshot()" type="button">Take Snapshot</button>
                 </div>
-                <div id="my_result"></div>
+                <div class="pt-3">
+                  <div id="my_result" class="d-flex" height="85px">
+                    @if(count($photos) > 0)
+                      @foreach($photos as $photo)
+                      <div class="text-center">
+                      <img src="{{ url("upload_images/".$photo->name) }}" height="50" class="px-2">
+                      <div class="pt-1"><button class="btn btn-danger btn-sm" type="button" onclick="deleteImage('{{ $photo->id }}')">X</button></div>
+                      </div>
+                      @endforeach
+                    @else
+                      <div class="text-center">
+                        <h2>Belum ada gambar</h2>
+                      </div>
+                    @endif
+                  </div>
+                </div>
               </div>
             </div>
             <div class="row">
@@ -81,8 +100,57 @@
   Webcam.attach('#video-webcam');
   function take_snapshot() {
     Webcam.snap( function(data_uri) {
-      document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
-    } );
+      saveSnap(data_uri);
+    });
+  }
+
+  function saveSnap(data){
+    $('#my_result').text('Waiting...');
+    Webcam.upload(data, "{{ route('photos.upload_images').'?patient_id='.$patient->id }}", function(code1, data1){
+      if(code1 == 200){
+        loadImage();
+      } else {
+        alert("failed");
+      }
+    })
+  }
+
+  function loadImage(){
+    $.ajax({
+      method: 'GET',
+      url: "{{ route('photos.get_photo_no_threatment') }}",
+      success: function(result){
+        var result = JSON.parse(result);
+        var image = "";
+
+        if(result.length > 0){
+          result.forEach(function(data){
+            image += '<div class="text-center">'
+            image += '<img src="{{ url("upload_images") }}/'+data.name+'" height="50" class="px-2">';
+            image += '<div class="pt-1"><button class="btn btn-danger btn-sm" type="button" onclick="deleteImage('+data.id+')">X</button></div>'
+            image += '</div>'
+          });
+          $('#my_result').html(image);
+        } else {
+          $('#my_result').html('<div class="text-center"><h2>Belum ada gambar</h2></div>')
+        }
+      }
+    });
+  }
+
+  function deleteImage(id){
+    $('#my_result').text('Waiting...');
+    $.ajax({
+      method: 'post',
+      url: "{{ route('photos.delete_image') }}",
+      data: {
+        _method: 'DELETE',
+        id: id,
+      },
+      success: function(result){
+        loadImage();
+      }
+    })
   }
 </script>
 @endsection
