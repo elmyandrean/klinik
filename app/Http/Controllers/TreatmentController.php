@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Models\Treatment;
+use Illuminate\Support\Facades\Validator;
 
 class TreatmentController extends Controller
 {
@@ -40,7 +41,15 @@ class TreatmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:5',
+            'gender' => 'required',
+            'birth_date' => 'required|date',
+            'personal_id' => 'nullable|digits_between:12,20',
+            'phone' => 'nullable|digits_between:10,20',
+            'email' => 'nullable|email',
+            'address' => 'nullable',
+        ]);
     }
 
     /**

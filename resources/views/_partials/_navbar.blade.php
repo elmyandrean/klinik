@@ -8,9 +8,6 @@
           <a class="nav-link" aria-current="page" href="{{ route('patients.create') }}"><i class="fa-solid fa-user-plus"></i> Add</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-user-pen"></i> Edit</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-users-viewfinder"></i> Studio</a>
         </li>
         <li class="nav-item">
