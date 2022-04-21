@@ -15,4 +15,12 @@ class Treatment extends Model
       'diagnosis',
       'notes',
   ];
+
+  public function patient() {
+    return $this->belongsTo(Patient::class);
+  }
+
+  public function photos() {
+    return $this->hasMany(Photo::class);
+  }
 }

@@ -116,4 +116,21 @@ class TreatmentController extends Controller
     {
         //
     }
+
+    public function comparison(Request $request){
+      $patient = Patient::findOrFail($request->patient_id);
+      $treatments = Treatment::where('patient_id', $request->patient_id)->orderByDesc('created_at')->get();
+
+      return view('treatments.comparison', [
+        'treatments' => $treatments,
+        'patient' => $patient,
+      ]);
+    }
+
+    public function get_photos(Request $request){
+      $treatments = Treatment::findOrFail($request->id);
+
+      // dd($treatments->photos);
+      return json_encode($treatments->photos, 200);
+    }
 }

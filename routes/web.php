@@ -21,6 +21,8 @@ use App\Http\Controllers\PhotoController;
 Route::middleware('auth')->group(function(){
   Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
   Route::resource('patients', PatientController::class);
+  Route::get('treatments/comparison', [TreatmentController::class, 'comparison'])->name('treatments.comparison');
+  Route::get('treatments/get_photos', [TreatmentController::class, 'get_photos'])->name('treatments.get_photos');
   Route::resource('treatments', TreatmentController::class);
   Route::post('/logout_action', [AuthController::class, 'logout_action'])->name('logout_action');
   Route::post('/photos/upload_images', [PhotoController::class, 'upload_images'])->name('photos.upload_images');
