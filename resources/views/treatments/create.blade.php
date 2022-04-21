@@ -11,6 +11,12 @@
         <div class="card-body">
           <form action="{{ route('treatments.store') }}" method="POST">
             @csrf
+            @error('photos')
+            <div class="alert alert-danger" role="alert">
+              {{ $message }}
+            </div>
+            @enderror
+
             <div class="row">
               <input type="hidden" name="patient_id" value="{{ $patient->id }}">
               <div class="col-md-4">
@@ -47,6 +53,11 @@
                     @error('notes') <div class="invalid-feedback">{{ $message }}</div> @enderror
                   </div>
                 </div>
+                <div class="mb-3 row">
+                  <div class="offset-md-4 col-md-9">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                  </div>
+                </div>
               </div>
               <div class="col-md-8 d-flex flex-column align-items-center">
                 <div id="video-webcam" class="mb-3"></div>
@@ -67,15 +78,6 @@
                         <h2>Belum ada gambar</h2>
                       </div>
                     @endif
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="mb-3 row">
-                  <div class="offset-md-3 col-md-9">
-                    <button class="btn btn-primary" type="submit">Save</button>
                   </div>
                 </div>
               </div>

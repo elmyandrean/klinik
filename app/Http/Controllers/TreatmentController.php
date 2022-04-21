@@ -54,6 +54,11 @@ class TreatmentController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
+        $photo = Photo::where('treatment_id', NULL)->get();
+        if(count($photo) == 0){
+          return back()->withErrors(['photos' => 'Belum ada Foto untuk di upload.'])->withInput();
+        }
+
         $validated = $validator->safe()->all();
         $treatment = new Treatment;
         $treatment->patient_id = $request->patient_id;
