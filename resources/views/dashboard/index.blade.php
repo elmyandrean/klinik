@@ -10,26 +10,25 @@
         <div class="card">
           <div class="card-header fw-bold">Search Patient</div>
           <div class="card-body">
-            <form action="#" method="POST">
-              @csrf
+            <form action="{{ route('dashboard') }}" method="GET">
               <div class="row">
                 <div class="col-md-6">
                   <div class="mb-3 row">
                     <label for="patien_id" class="col-sm-3 col-form-label">Patient ID</label>
                     <div class="col-sm-9">
-                      <input type="text" name="patient_id" id="patient_id" class="form-control">
+                      <input type="text" name="patient_id" id="patient_id" class="form-control" value="{{ request('patient_id') }}">
                     </div>
                   </div>
                   <div class="mb-3 row">
                     <label for="name" class="col-sm-3 col-form-label">Name</label>
                     <div class="col-sm-9">
-                      <input type="text" name="name" id="name" class="form-control">
+                      <input type="text" name="name" id="name" class="form-control" value="{{ request('name') }}">
                     </div>
                   </div>
                   <div class="mb-3 row">
                     <label for="visit_date" class="col-sm-3 col-form-label">Visit Date</label>
                     <div class="col-sm-9">
-                      <input type="text" name="visit_date" id="visit_date" class="form-control">
+                      <input type="text" name="visit_date" id="visit_date" class="form-control" value="{{ request('visit_date') }}">
                     </div>
                   </div>
                 </div>
@@ -37,19 +36,19 @@
                   <div class="mb-3 row">
                     <label for="registration_date" class="col-sm-3 col-form-label">Reg. Date</label>
                     <div class="col-sm-9">
-                      <input type="text" name="registration_date" id="registration_date" class="form-control">
+                      <input type="text" name="registration_date" id="registration_date" class="form-control" value="{{ request('registration_date') }}">
                     </div>
                   </div>
                   <div class="mb-3 row">
                     <label for="shot_date" class="col-sm-3 col-form-label">Shot Date</label>
                     <div class="col-sm-9">
-                      <input type="text" name="shot_date" id="shot_date" class="form-control">
+                      <input type="text" name="shot_date" id="shot_date" class="form-control" value="{{ request('shot_date') }}">
                     </div>
                   </div>
                   <div class="mb-3 row">
                     <label for="personal_id" class="col-sm-3 col-form-label">Personal ID</label>
                     <div class="col-sm-9">
-                      <input type="text" name="personal_id" id="personal_id" class="form-control">
+                      <input type="text" name="personal_id" id="personal_id" class="form-control" value="{{ request('personal_id') }}">
                     </div>
                   </div>
                 </div>
@@ -57,7 +56,7 @@
                   <div class="mb-3 row">
                     <div class="offset-sm-3 col-sm-9">
                       <button class="btn btn-primary" type="submit">Search</button>
-                      <button class="btn btn-secondary text-white">Cancel</button>
+                      <a href="{{ route('dashboard') }}" class="btn btn-secondary text-white">Cancel</a>
                     </div>
                   </div>
                 </div>
