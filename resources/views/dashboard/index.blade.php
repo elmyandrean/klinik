@@ -96,8 +96,8 @@
               <td class="align-middle"></td>
               <td class="align-middle"></td>
               <td class="align-middle">
-                <a href="{{ url('treatments/create?patient_id='.$patient->id) }}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" title="Treatmen / Photo"><i class="fas fa-camera"></i></a>
-                <a href="{{ url('treatments/comparison?patient_id='.$patient->id) }}" class="btn btn-sm btn-light border" data-bs-toggle="tooltip" title="Komparasi Foto"><i class="fa-solid fa-code-compare"></i></a>
+                <a href="{{ url('patients/treatments/create?patient_id='.$patient->id) }}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" title="Treatmen / Photo"><i class="fas fa-camera"></i></a>
+                <a href="{{ url('patients/treatments/comparison?patient_id='.$patient->id) }}" class="btn btn-sm btn-light border" data-bs-toggle="tooltip" title="Komparasi Foto"><i class="fa-solid fa-code-compare"></i></a>
                 <a href="{{ route('patients.edit', $patient->id) }}" class="btn btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit Patient"><i class="fas fa-edit"></i></a>
               </td>
             </tr>

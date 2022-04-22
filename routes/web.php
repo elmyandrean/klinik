@@ -20,14 +20,14 @@ use App\Http\Controllers\PhotoController;
 
 Route::middleware('auth')->group(function(){
   Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-  Route::resource('patients', PatientController::class);
-  Route::get('treatments/comparison', [TreatmentController::class, 'comparison'])->name('treatments.comparison');
-  Route::get('treatments/get_photos', [TreatmentController::class, 'get_photos'])->name('treatments.get_photos');
-  Route::resource('treatments', TreatmentController::class);
+  Route::get('patients/treatments/comparison', [TreatmentController::class, 'comparison'])->name('treatments.comparison');
+  Route::get('patients/treatments/get_photos', [TreatmentController::class, 'get_photos'])->name('treatments.get_photos');
+  Route::resource('patients/treatments', TreatmentController::class);
   Route::post('/logout_action', [AuthController::class, 'logout_action'])->name('logout_action');
-  Route::post('/photos/upload_images', [PhotoController::class, 'upload_images'])->name('photos.upload_images');
-  Route::get('/photos/get_photo_no_threatment', [PhotoController::class, 'get_photo_no_threatment'])->name('photos.get_photo_no_threatment');
-  Route::delete('/photos/delete_image', [PhotoController::class, 'delete_image'])->name('photos.delete_image');
+  Route::post('patients/photos/upload_images', [PhotoController::class, 'upload_images'])->name('photos.upload_images');
+  Route::get('patients/photos/get_photo_no_threatment', [PhotoController::class, 'get_photo_no_threatment'])->name('photos.get_photo_no_threatment');
+  Route::delete('patients/photos/delete_image', [PhotoController::class, 'delete_image'])->name('photos.delete_image');
+  Route::resource('patients', PatientController::class);
 });
 
 Route::middleware('guest')->group(function(){

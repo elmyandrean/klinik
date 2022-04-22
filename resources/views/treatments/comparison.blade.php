@@ -58,7 +58,7 @@
 <script type="text/javascript">
   function getPicture(value, position){
     $.ajax({
-      url: "{{ url('treatments/get_photos') }}?id="+value,
+      url: "{{ url('patients/treatments/get_photos') }}?id="+value,
       method: "GET",
       success: function(response){
         var photos = JSON.parse(response);
