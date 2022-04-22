@@ -18,4 +18,8 @@ class Patient extends Model
         'address',
         'email'
     ];
+
+    public function last_treatment() {
+      return $this->hasOne(Treatment::class)->latest('id');
+    }
 }

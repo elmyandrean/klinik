@@ -81,7 +81,7 @@
               <th>Gender</th>
               <th>Date of Birth</th>
               <th>Treatmen / Notes</th>
-              <th>Checkin Today</th>
+              <th>Last Checkin</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -93,8 +93,8 @@
               <td class="align-middle">{{ $patient->name }}</td>
               <td class="align-middle">{{ $patient->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
               <td class="align-middle">{{ date('d-m-Y', strtotime($patient->birth_date)) }}</td>
-              <td class="align-middle"></td>
-              <td class="align-middle"></td>
+              <td class="align-middle">{{ $patient->last_treatment ? $patient->last_treatment->treatment.' / '.$patient->last_treatment->notes : 'Belum ada treatment' }}</td>
+              <td class="align-middle">{{ $patient->last_treatment ? $patient->last_treatment->created_at->diffForHumans() : '-' }}</td>
               <td class="align-middle">
                 <a href="{{ url('patients/treatments/create?patient_id='.$patient->id) }}" class="btn btn-sm btn-primary" data-bs-toggle="tooltip" title="Treatmen / Photo"><i class="fas fa-camera"></i></a>
                 <a href="{{ url('patients/treatments/comparison?patient_id='.$patient->id) }}" class="btn btn-sm btn-light border" data-bs-toggle="tooltip" title="Komparasi Foto"><i class="fa-solid fa-code-compare"></i></a>
