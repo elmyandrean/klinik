@@ -10,8 +10,10 @@
 <body>
   <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div class="col-10 col-sm-5 col-md-4 py-3 text-center login-starter" style="display: block;">
-      <h1 class="mb-3">Brand Name</h1>
-      <a class="btn btn-secondary btn-cta-login" href="{{ route('login') }}" onclick="showLoginForm();">Login</a>
+      <div class="logo-brand">
+        <img src="{{ url('images/logo.gif') }}" alt="Logo" height="100">
+      </div>
+      <a class="btn btn-secondary btn-cta-login mt-3" href="{{ route('login') }}" onclick="showLoginForm();">Login</a>
     </div>
   </div>
 
