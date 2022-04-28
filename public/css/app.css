@@ -21571,3 +21571,7 @@ body, html {
   border: none;
   background-color: transparent;
 }
+
+.clickable-list {
+  cursor: pointer;
+}

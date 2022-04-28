@@ -66,7 +66,10 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        //
+      $patient = Patient::findOrFail($id);
+      return view('patients.show', [
+        'patient' => $patient,
+      ]);
     }
 
     /**

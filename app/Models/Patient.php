@@ -19,6 +19,10 @@ class Patient extends Model
         'email'
     ];
 
+    public function treatments() {
+      return $this->hasMany(Treatment::class)->orderBy('id');
+    }
+
     public function last_treatment() {
       return $this->hasOne(Treatment::class)->latest('id');
     }
