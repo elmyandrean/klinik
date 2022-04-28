@@ -75,7 +75,7 @@
                       @endforeach
                     @else
                       <div class="text-center">
-                        <h2>Belum ada gambar</h2>
+                        <h5>Belum ada gambar</h5>
                       </div>
                     @endif
                   </div>
@@ -94,8 +94,8 @@
 <script src="{{ url('libs/webcamjs/webcam.min.js') }}"></script>
 <script language="JavaScript">
   Webcam.set({
-    width: 320,
-    height: 240,
+    width: 480,
+    height: 320,
     image_format: 'jpeg',
     jpeg_quality: 90
   });
@@ -128,13 +128,13 @@
         if(result.length > 0){
           result.forEach(function(data){
             image += '<div class="text-center">'
-            image += '<img src="{{ url("upload_images") }}/'+data.name+'" height="50" class="px-2">';
+            image += '<img src="{{ url("upload_images") }}/'+data.name+'" height="80" class="px-2">';
             image += '<div class="pt-1"><button class="btn btn-danger btn-sm" type="button" onclick="deleteImage('+data.id+')">X</button></div>'
             image += '</div>'
           });
           $('#my_result').html(image);
         } else {
-          $('#my_result').html('<div class="text-center"><h2>Belum ada gambar</h2></div>')
+          $('#my_result').html('<div class="text-center"><h5>Belum ada gambar</h5></div>')
         }
       }
     });
