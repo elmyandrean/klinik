@@ -52,16 +52,17 @@
                     <div class="row" style="min-height: 125px;">
                         <div class="col-4 border-end">
                             <h5><i class="fa-regular fa-clock"></i> Date</h5>
-                            <ul>
+                            <ul style="overflow-y:scroll; height: 95px;">
                                 @foreach($patient->treatments as $treatment)
-                                <li class="clickable-list"><i class="fa-solid fa-folder pe-2"></i> {{ date('d-m-Y', strtotime($treatment->created_at)) }}</li>
+                                <li class="clickable-list" onclick="getDataTreatment({{ $treatment->id }})"><i class="fa-solid fa-folder pe-2"></i> <span class="text-shadow-hover">{{ date('d-m-Y', strtotime($treatment->created_at)) }}</span></li>
                                 @endforeach
                             </ul>
                         </div>
                         <div class="col-8">
                             <h5>Photos</h5>
                             <div class="row">
-                                <div id="photos"></div>
+                                <div id="photos" class="d-flex align-items-center"></div>
+                                
                             </div>
                         </div>
                     </div>
@@ -70,4 +71,29 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+  function getDataTreatment(id){
+    $("#photos").html("Waiting...")
+
+    $.get('{{ url('patients/treatments') }}/'+id, function(data, status){
+      data = JSON.parse(data);
+      $('#treatment').html(data.treatment);
+      $('#diagnosis').html(data.diagnosis);
+      $('#notes').html(data.notes);
+
+      var photos_html = "";
+      var photos = data.photos;
+      photos.forEach(function(rslt){
+        photos_html += "<div class=\"photo-images\">";
+        photos_html += "<img src=\"{{ url('/') }}/upload_images/"+rslt.name+"\" alt=\"photos\" height=\"85px\" class=\"px-2\">";
+        photos_html += "<div class=\"text-center mt-1\"><button class=\"btn btn-sm btn-secondary\" type=\"button\"><i class=\"fa-solid fa-camera\"></i> Retake</button></div>"
+        photos_html += "</div>";
+      })
+      $("#photos").html(photos_html);
+    });
+  }
+</script>
 @endsection

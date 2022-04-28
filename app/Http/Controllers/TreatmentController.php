@@ -80,7 +80,10 @@ class TreatmentController extends Controller
      */
     public function show($id)
     {
-        //
+      $treatment = Treatment::findOrFail($id);
+      $treatment->photos = $treatment->photos()->get();
+
+      return json_encode($treatment, 200);
     }
 
     /**
@@ -91,7 +94,7 @@ class TreatmentController extends Controller
      */
     public function edit($id)
     {
-        //
+      //
     }
 
     /**
@@ -130,7 +133,6 @@ class TreatmentController extends Controller
     public function get_photos(Request $request){
       $treatments = Treatment::findOrFail($request->id);
 
-      // dd($treatments->photos);
       return json_encode($treatments->photos, 200);
     }
 }
