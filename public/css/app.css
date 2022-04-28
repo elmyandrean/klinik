@@ -21574,4 +21574,5 @@ body, html {
 
 .clickable-list {
   cursor: pointer;
+  list-style-type: none;
 }

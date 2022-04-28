@@ -54,7 +54,7 @@
                             <h5><i class="fa-regular fa-clock"></i> Date</h5>
                             <ul>
                                 @foreach($patient->treatments as $treatment)
-                                <li class="clickable-list">{{ date('d-m-Y', strtotime($treatment->created_at)) }}</li>
+                                <li class="clickable-list"><i class="fa-solid fa-folder pe-2"></i> {{ date('d-m-Y', strtotime($treatment->created_at)) }}</li>
                                 @endforeach
                             </ul>
                         </div>
