@@ -30,14 +30,23 @@
                 <small>{{ count($action->treatment) }} Patient(s)</small>
               </div>
               <div class="action-button ms-auto align-self-end">
-                <a href="#">Edit</a> / <a href="#">Delete</a>
+                <a href="{{ route('actions.edit', $action->id) }}">Edit</a> / 
+                <form action="{{ route('actions.destroy', $action->id) }}" method="POST" class="delete-form">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="delete-link">Delete</button>
+                </form>
               </div>
             </div>
           </div>
         </div>
         @endforeach
-      @endif
-    </div>
+
+        @endif
+      </div>
+      <div class="pt-3">
+        {{ $actions->links() }}
+      </div>
   </div>
 </div>
 @endsection

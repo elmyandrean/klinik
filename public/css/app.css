@@ -21580,3 +21580,17 @@ body, html {
   font-weight: normal;
   text-shadow: 0px 0px 0.7px black;
 }
+
+.delete-form {
+  display: inline-block;
+}
+
+.delete-link {
+  color: #0d6efd;
+  text-decoration: underline;
+  background-color: transparent;
+  border: none;
+}
+.delete-link:hover {
+  color: #0a58ca;
+}
