@@ -14,8 +14,12 @@
         </li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-gear"></i> Setting</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" aria-current="page" href="#" id="settingDropdown" role="button" data-bs-toggle="dropdown"><i class="fa-solid fa-gear"></i> Setting</a>
+          <ul class="dropdown-menu" aria-labelledby="settingDropdown">
+            <li><a href="#" class="dropdown-item">Action Management</a></li>
+            <li><a href="#" class="dropdown-item">Diagnosis Management</a></li>
+          </ul>
         </li>
         <li class="nav-item">
           <form action="{{ route('logout_action') }}" method="post">
