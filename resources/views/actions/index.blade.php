@@ -3,13 +3,13 @@
 @extends('template')
 
 @section('content')
-<div class="container pt-4">
+<div class="container pt-3">
   <div class="d-flex align-items-center">
     <div class="title-content">
       <h4>Action / Treatment Management</h4>
     </div>
     <div class="button-action ms-auto">
-      <button class="btn btn-primary">Tambah Action / Treatment</button>
+      <a class="btn btn-primary" href="{{ route('actions.create') }}">Tambah Action / Treatment</a>
     </div>
   </div>
   <div class="action-content">
