@@ -14,19 +14,29 @@
   </div>
   <div class="action-content">
     <div class="row d-flex">
-      <div class="col-md-3 pt-3">
-        <div class="card">
-          <div class="card-body d-flex">
-            <div class="action-title">
-              <h5>Action 1</h5>
-              <small>15 Users</small>
-            </div>
-            <div class="action-button ms-auto align-self-end">
-              <a href="#">Edit</a> / <a href="#">Delete</a>
+      @if(count($actions) == 0)
+      <div class="text-center mt-5">
+        <h5>Data Treatment Belum Ada.</h5>
+        <a href="{{ route('actions.create') }}" class="btn btn-primary">Buat Action / Treatment Baru</a>
+      </div>
+
+      @else
+        @foreach($actions as $action)
+        <div class="col-md-3 pt-3">
+          <div class="card">
+            <div class="card-body d-flex">
+              <div class="action-title">
+                <h5>{{ $action->name }}</h5>
+                <small>{{ count($action->treatment) }} Patient(s)</small>
+              </div>
+              <div class="action-button ms-auto align-self-end">
+                <a href="#">Edit</a> / <a href="#">Delete</a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        @endforeach
+      @endif
     </div>
   </div>
 </div>
