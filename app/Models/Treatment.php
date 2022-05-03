@@ -27,4 +27,8 @@ class Treatment extends Model
   public function actions() {
     return $this->belongsToMany(Action::class);
   }
+
+  public function diagnoses() {
+    return $this->belongsToMany(Diagnose::class);
+  }
 }

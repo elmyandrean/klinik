@@ -18,7 +18,7 @@
           <a class="nav-link dropdown-toggle" aria-current="page" href="#" id="settingDropdown" role="button" data-bs-toggle="dropdown"><i class="fa-solid fa-gear"></i> Setting</a>
           <ul class="dropdown-menu" aria-labelledby="settingDropdown">
             <li><a href="{{ route('actions.index') }}" class="dropdown-item">Action / Treatment Management</a></li>
-            <li><a href="#" class="dropdown-item">Diagnosis Management</a></li>
+            <li><a href="{{ route('diagnoses.index') }}" class="dropdown-item">Diagnosis Management</a></li>
           </ul>
         </li>
         <li class="nav-item">

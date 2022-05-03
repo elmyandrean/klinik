@@ -8,7 +8,7 @@ use App\Models\Action;
 
 class ActionController extends Controller
 {
-    public function index(Request $request){
+    public function index(){
       $actions = Action::where('status', '=', true)->paginate(24);
       return view('actions.index', [
         'actions' => $actions,

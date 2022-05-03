@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DiagnosesController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\TreatmentController;
@@ -30,6 +31,7 @@ Route::middleware('auth')->group(function(){
   Route::delete('patients/photos/delete_image', [PhotoController::class, 'delete_image'])->name('photos.delete_image');
   Route::resource('patients', PatientController::class);
   Route::resource('actions', ActionController::class);
+  Route::resource('diagnoses', DiagnosesController::class);
 });
 
 Route::middleware('guest')->group(function(){

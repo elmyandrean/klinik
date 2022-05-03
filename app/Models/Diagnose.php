@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Diagnose extends Model
 {
     use HasFactory;
+
+    public function treatment() {
+      return $this->belongsToMany(Treatment::class);
+    }
 }
