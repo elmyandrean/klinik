@@ -76,12 +76,16 @@
 @section('scripts')
 <script type="text/javascript">
   function getDataTreatment(id){
+
+    $(".clickable-list").removeClass("active");
+    $(event.currentTarget).addClass('active');
+
     $("#photos").html("Waiting...")
 
     $.get('{{ url('patients/treatments') }}/'+id, function(data, status){
       data = JSON.parse(data);
-      $('#treatment').html(data.treatment);
-      $('#diagnosis').html(data.diagnosis);
+      $('#treatment').html(data.action.name);
+      $('#diagnosis').html(data.diagnose.name);
       $('#notes').html(data.notes);
 
       var photos_html = "";

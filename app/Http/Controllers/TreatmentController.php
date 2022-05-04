@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Action;
+use App\Models\Diagnose;
 use App\Models\Patient;
-use App\Models\Treatment;
 use App\Models\Photo;
+use App\Models\Treatment;
 use Illuminate\Support\Facades\Validator;
 
 class TreatmentController extends Controller
@@ -29,10 +31,14 @@ class TreatmentController extends Controller
     {
       $patient = Patient::find($request->patient_id);
       $photos = Photo::where('treatment_id', NULL)->get();
+      $actions = Action::where('status', '=', true)->get();
+      $diagnosis = Diagnose::where('status', '=', true)->get();
 
       return view('treatments.create', [
         'patient' => $patient,
         'photos' => $photos,
+        'actions' => $actions,
+        'diagnosis' => $diagnosis,
       ]);
     }
 
@@ -62,8 +68,8 @@ class TreatmentController extends Controller
         $validated = $validator->safe()->all();
         $treatment = new Treatment;
         $treatment->patient_id = $request->patient_id;
-        $treatment->treatment = $validated['treatment'];
-        $treatment->diagnosis = $validated['diagnosis'];
+        $treatment->action_id = $validated['treatment'];
+        $treatment->diagnose_id = $validated['diagnosis'];
         $treatment->notes = $validated['notes'];
         $treatment->save();
 
@@ -82,6 +88,10 @@ class TreatmentController extends Controller
     {
       $treatment = Treatment::findOrFail($id);
       $treatment->photos = $treatment->photos()->get();
+      $treatment->action = $treatment->action()->first();
+      $treatment->diagnose = $treatment->diagnose()->first();
+
+      // dd($treatment);
 
       return json_encode($treatment, 200);
     }

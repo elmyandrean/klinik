@@ -24,11 +24,10 @@
                   <label for="treatment" class="col-sm-4 col-form-label @error('treatment') is-invalid @enderror">Treatment</label>
                   <div class="col-sm-8">
                     <select name="treatment" id="treatment" class="form-select">
-                      <option value="treatment 1">Treatment 1</option>
-                      <option value="treatment 2">Treatment 2</option>
-                      <option value="treatment 3">Treatment 3</option>
-                      <option value="treatment 4">Treatment 4</option>
-                      <option value="treatment 5">Treatment 5</option>
+                      <option selected disabled>- Pilih Treatment -</option>
+                      @foreach($actions as $action)
+                      <option value="{{ $action->id }}" {{ old('treatment') == $action->id ? "selected" : "" }}>{{ $action->name }}</option>
+                      @endforeach
                     </select>
                     @error('treatment') <div class="invalid-feedback">{{ $message }}</div> @enderror
                   </div>
@@ -37,11 +36,10 @@
                   <label for="diagnosis" class="col-sm-4 col-form-label">Diagnosis</label>
                   <div class="col-sm-8">
                     <select name="diagnosis" id="diagnosis" class="form-select @error('diagnosis') is-invalid @enderror">
-                      <option value="diagnosis 1">Diagnosis 1</option>
-                      <option value="diagnosis 2">Diagnosis 2</option>
-                      <option value="diagnosis 3">Diagnosis 3</option>
-                      <option value="diagnosis 4">Diagnosis 4</option>
-                      <option value="diagnosis 5">Diagnosis 5</option>
+                      <option selected disabled>- Pilih Diagnosis -</option>
+                      @foreach($diagnosis as $diagnose)
+                      <option value="{{ $diagnose->id }}" {{ old("diagnosis") == $diagnose->id ? "selected" : "" }}>{{ $diagnose->name }}</option>
+                      @endforeach
                     </select>
                     @error('diagnosis') <div class="invalid-feedback">{{ $message }}</div> @enderror
                   </div>

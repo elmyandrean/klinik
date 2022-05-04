@@ -24,11 +24,11 @@ class Treatment extends Model
     return $this->hasMany(Photo::class);
   }
 
-  public function actions() {
-    return $this->belongsToMany(Action::class);
+  public function action() {
+    return $this->belongsTo(Action::class);
   }
 
-  public function diagnoses() {
-    return $this->belongsToMany(Diagnose::class);
+  public function diagnose() {
+    return $this->belongsTo(Diagnose::class);
   }
 }

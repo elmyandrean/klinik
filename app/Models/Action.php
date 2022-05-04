@@ -10,6 +10,6 @@ class Action extends Model
     use HasFactory;
 
     public function treatment() {
-      return $this->belongsToMany(Treatment::class);
+      return $this->hasMany(Treatment::class);
     }
 }
