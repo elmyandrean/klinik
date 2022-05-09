@@ -26,8 +26,9 @@ Route::middleware('auth')->group(function(){
   Route::get('patients/treatments/get_photos', [TreatmentController::class, 'get_photos'])->name('treatments.get_photos');
   Route::resource('patients/treatments', TreatmentController::class);
   Route::post('/logout_action', [AuthController::class, 'logout_action'])->name('logout_action');
-  Route::post('patients/photos/upload_images', [PhotoController::class, 'upload_images'])->name('photos.upload_images');
+  Route::get('patients/photos/{id}', [PhotoController::class, 'get_photo'])->name('photos.get_photo');
   Route::get('patients/photos/get_photo_no_threatment', [PhotoController::class, 'get_photo_no_threatment'])->name('photos.get_photo_no_threatment');
+  Route::post('patients/photos/upload_images', [PhotoController::class, 'upload_images'])->name('photos.upload_images');
   Route::delete('patients/photos/delete_image', [PhotoController::class, 'delete_image'])->name('photos.delete_image');
   Route::resource('patients', PatientController::class);
   Route::resource('actions', ActionController::class);

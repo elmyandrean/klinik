@@ -31,6 +31,12 @@ class PhotoController extends Controller
       return json_encode($photos, 200);
     }
 
+    public function get_photo($id){
+      $photo = Photo::findOrFail($id);
+
+      return json_encode($photo, 200);
+    }
+
     public function delete_image(Request $request){
       $photo = Photo::findOrFail($request->id);
 

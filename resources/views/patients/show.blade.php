@@ -39,8 +39,8 @@
         </div>
         <div class="col-md-8">
             <div class="card">
-                <div class="card-body d-flex justify-content-center align-items-center" style="height: 400px;">
-                    <div class="text-center" id="foto_user">Foto User</div>
+                <div class="card-body" id="foto_user" style="min-height: 400px;">
+                  
                 </div>
             </div>
         </div>
@@ -61,8 +61,9 @@
                         <div class="col-8">
                             <h5>Photos</h5>
                             <div class="row">
-                                <div id="photos" class="d-flex align-items-center"></div>
-                                
+                                <div id="photos" class="d-flex align-items-center">
+                                  
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -74,14 +75,17 @@
 @endsection
 
 @section('scripts')
+<script src="{{ url('libs/webcamjs/webcam.min.js') }}"></script>
 <script type="text/javascript">
   function getDataTreatment(id){
-
     $(".clickable-list").removeClass("active");
     $(event.currentTarget).addClass('active');
 
     $("#photos").html("Waiting...")
+    loadDataFoto(id);
+  }
 
+  function loadDataFoto(id) {
     $.get('{{ url('patients/treatments') }}/'+id, function(data, status){
       data = JSON.parse(data);
       $('#treatment').html(data.action.name);
@@ -93,11 +97,44 @@
       photos.forEach(function(rslt){
         photos_html += "<div class=\"photo-images\">";
         photos_html += "<img src=\"{{ url('/') }}/upload_images/"+rslt.name+"\" alt=\"photos\" height=\"85px\" class=\"px-2\">";
-        photos_html += "<div class=\"text-center mt-1\"><button class=\"btn btn-sm btn-secondary\" type=\"button\"><i class=\"fa-solid fa-camera\"></i> Retake</button></div>"
+        photos_html += "<div class=\"text-center mt-1\"><button class=\"btn btn-sm btn-secondary\" type=\"button\" onclick=\"retakeFoto("+rslt.id+")\"><i class=\"fa-solid fa-camera\"></i> Retake</button></div>"
         photos_html += "</div>";
       })
       $("#photos").html(photos_html);
     });
+  }
+
+  function retakeFoto(id){
+    $.get('{{ url('patients/photos') }}/'+id, function(data, status){
+      data = JSON.parse(data);
+
+      show_photo = "";
+      show_photo += "<div class=\"row\">";
+      show_photo +=   "<div class=\"col-md-6 pt-3 text-center\" id=\"beforeRetake\"><span>Before Retake</span>";
+      show_photo += "<img src=\"{{ url('upload_images') }}/"+data.name+"\" class=\"pt-3\" alt=\"Before Retake\" height=\"265\">";
+      show_photo += "</div><div class=\"col-md-6 pt-3 text-center\" id=\"newRetake\"><form action=\"POST\"><span>Result Retake</span><div id=\"video-webcam\" class=\"mx-auto\"></div>";
+      show_photo += "<button class=\"btn btn-secondary mt-3\" type=\"button\"  onclick=\"previewRetake("+data.id+")\"><i class=\"fas fa-camera\"></i> Save</button></form></div></div>";
+      $("#foto_user").html(show_photo);
+    
+      Webcam.attach('#video-webcam');
+    });
+  }
+
+  Webcam.set({
+    width: 320,
+    height: 256,
+    image_format: 'jpeg',
+    jpeg_quality: 90
+  });
+
+  function previewRetake(id) {
+    Webcam.snap( function(data_uri) {
+      saveSnap(id, data_uri);
+    });
+  }
+
+  function saveSnap(data){
+    alert(data);
   }
 </script>
 @endsection
