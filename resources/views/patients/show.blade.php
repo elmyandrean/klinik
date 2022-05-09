@@ -2,6 +2,12 @@
 
 @section('content')
 <div class="container pt-3">
+  @if($message = Session::get('success'))
+  <div class="alert alert-success" role="alert">
+    <strong>Success!</strong> {{ $message }}
+  </div>
+  @endif
+
     <div class="card"">
         <div class="card-body">
             {{ $patient->name .' ( '.($patient->gender == 'L' ? 'Male' : 'Female').' ) '. date('d-m-Y', strtotime($patient->birth_date)) }}
@@ -41,7 +47,7 @@
             <div class="card">
                 <div class="card-body" id="foto_user" style="min-height: 400px;">
                   <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-6 text-center">
                         <h5 class="text-center mb-3">Before Retake</h5>
                         <div class="before-retake" id="beforeRetake"></div>
                       </div>
@@ -86,6 +92,7 @@
 
 @section('scripts')
 <script src="{{ url('libs/webcamjs/webcam.min.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
   function getDataTreatment(id){
     $(".clickable-list").removeClass("active");
@@ -143,14 +150,30 @@
     Webcam.snap( function(data_uri) {
         var previewRetake = "";
         previewRetake += "<h5 class=\"mb-3\">Result Retake</h5>";
-        previewRetake += "<img src=\""+data_uri+"\" alt=\"Result Retake\" class=\"pt-3\">";
-        previewRetake += "<button class=\"btn btn-secondary me-2 mt-2\" type=\"button\">Save Image</button><button class=\"btn btn-light border mt-2\" type=\"button\">Retake Image</button></div>"
+        previewRetake += "<img src=\""+data_uri+"\" alt=\"Result Retake\" id=\"resultRetake\" class=\"pt-3\">";
+        previewRetake += "<button class=\"btn btn-secondary me-2 mt-2\" type=\"button\" onclick=\"saveSnap("+id+")\">Save Image</button><button class=\"btn btn-light border mt-2\" type=\"button\">Retake Image</button></div>"
         $('#afterRetake').html(previewRetake);
     });
   }
 
-  function saveSnap(data){
-    alert(data);
+  function saveSnap(id){
+    var photo = document.getElementById("resultRetake").src;
+    Webcam.upload(photo, "{{ route('photos.update_image') }}?id="+id, function(code, data){
+      if(code == 200){
+        Swal.fire({
+          title: 'Success!',
+          text: data,
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          if(result.isConfirmed){
+            location.reload();
+          }
+        });
+      } else {
+        alert("failed");
+      }
+    })
   }
 </script>
 @endsection

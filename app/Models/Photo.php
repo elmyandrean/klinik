@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Photo extends Model
 {
     use HasFactory;
+
+    public function treatment(){
+      return $this->belongsTo(Treatment::class);
+    }
 }

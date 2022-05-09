@@ -49,4 +49,25 @@ class PhotoController extends Controller
 
       return json_encode("Success", 200);
     }
+
+    public function update_image(Request $request){
+      $photo = Photo::findOrFail($request->id);
+
+      $image_path = public_path('upload_images/'.$photo->name);
+      if(File::exists($image_path)) {
+        File::delete($image_path);
+      }
+
+      $filename = 'pic_'.date('YmdHis').'.jpeg';
+      $filepath = public_path('upload_images/');
+
+      if(move_uploaded_file($_FILES['webcam']['tmp_name'],$filepath.$filename)){
+        $photo->name = $filename;
+        $photo->save();
+
+        return json_encode('Foto tertanggal '.date("d-m-Y", strtotime($photo->treatment->created_at)).' telah berhasil di retake', 200);
+      }
+
+      return json_encode('Something wrong when process upload images', 500);
+    }
 }
