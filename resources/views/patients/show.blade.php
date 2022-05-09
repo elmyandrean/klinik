@@ -40,7 +40,17 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body" id="foto_user" style="min-height: 400px;">
-                  
+                  <div class="row">
+                      <div class="col-md-6">
+                        <h5 class="text-center mb-3">Before Retake</h5>
+                        <div class="before-retake" id="beforeRetake"></div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="after-retake text-center" id="afterRetake">
+                            <h5 class="mb-3">Preview Retake</h5>
+                        </div>
+                      </div>
+                  </div>
                 </div>
             </div>
         </div>
@@ -108,28 +118,34 @@
     $.get('{{ url('patients/photos') }}/'+id, function(data, status){
       data = JSON.parse(data);
 
-      show_photo = "";
-      show_photo += "<div class=\"row\">";
-      show_photo +=   "<div class=\"col-md-6 pt-3 text-center\" id=\"beforeRetake\"><span>Before Retake</span>";
-      show_photo += "<img src=\"{{ url('upload_images') }}/"+data.name+"\" class=\"pt-3\" alt=\"Before Retake\" height=\"265\">";
-      show_photo += "</div><div class=\"col-md-6 pt-3 text-center\" id=\"newRetake\"><form action=\"POST\"><span>Result Retake</span><div id=\"video-webcam\" class=\"mx-auto\"></div>";
-      show_photo += "<button class=\"btn btn-secondary mt-3\" type=\"button\"  onclick=\"previewRetake("+data.id+")\"><i class=\"fas fa-camera\"></i> Save</button></form></div></div>";
-      $("#foto_user").html(show_photo);
+      beforeRetake = "";
+      beforeRetake += "<img src=\"{{ url('upload_images') }}/"+data.name+"\" class=\"pt-3\" alt=\"Before Retake\" height=\"265\">";
+      $('#beforeRetake').html(beforeRetake);
+
+      afterRetake = "";
+      afterRetake += 
+      afterRetake += "<h5 class=\"text-center mb-3\">Preview Retake</h5><div id=\"video-webcam\" class=\"m-auto pt-3\"></div>";
+      afterRetake += "<button class=\"btn btn-secondary mt-4\" type=\"button\"  onclick=\"previewRetake("+data.id+")\"><i class=\"fas fa-camera\"></i> Take a Picture</button>";
+      $("#afterRetake").html(afterRetake);
     
       Webcam.attach('#video-webcam');
     });
   }
 
   Webcam.set({
-    width: 320,
-    height: 256,
+    width: 332,
+    height: 250,
     image_format: 'jpeg',
     jpeg_quality: 90
   });
 
   function previewRetake(id) {
     Webcam.snap( function(data_uri) {
-      saveSnap(id, data_uri);
+        var previewRetake = "";
+        previewRetake += "<h5 class=\"mb-3\">Result Retake</h5>";
+        previewRetake += "<img src=\""+data_uri+"\" alt=\"Result Retake\" class=\"pt-3\">";
+        previewRetake += "<button class=\"btn btn-secondary me-2 mt-2\" type=\"button\">Save Image</button><button class=\"btn btn-light border mt-2\" type=\"button\">Retake Image</button></div>"
+        $('#afterRetake').html(previewRetake);
     });
   }
 
