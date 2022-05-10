@@ -58,6 +58,8 @@ class PhotoController extends Controller
         File::delete($image_path);
       }
 
+      // dd($image_path);
+
       $filename = 'pic_'.date('YmdHis').'.jpeg';
       $filepath = public_path('upload_images/');
 

@@ -129,14 +129,17 @@
       beforeRetake += "<img src=\"{{ url('upload_images') }}/"+data.name+"\" class=\"pt-3\" alt=\"Before Retake\" height=\"265\">";
       $('#beforeRetake').html(beforeRetake);
 
-      afterRetake = "";
-      afterRetake += 
-      afterRetake += "<h5 class=\"text-center mb-3\">Preview Retake</h5><div id=\"video-webcam\" class=\"m-auto pt-3\"></div>";
-      afterRetake += "<button class=\"btn btn-secondary mt-4\" type=\"button\"  onclick=\"previewRetake("+data.id+")\"><i class=\"fas fa-camera\"></i> Take a Picture</button>";
-      $("#afterRetake").html(afterRetake);
-    
-      Webcam.attach('#video-webcam');
+      previewRetake(data.id)
     });
+  }
+
+  function previewRetake(id){
+    afterRetake = "";
+    afterRetake += "<h5 class=\"text-center mb-3\">Preview Retake</h5><div id=\"video-webcam\" class=\"m-auto pt-3\"></div>";
+    afterRetake += "<button class=\"btn btn-secondary mt-4\" type=\"button\"  onclick=\"resultRetake("+id+")\"><i class=\"fas fa-camera\"></i> Take a Picture</button>";
+    $("#afterRetake").html(afterRetake);
+  
+    Webcam.attach('#video-webcam');
   }
 
   Webcam.set({
@@ -146,13 +149,13 @@
     jpeg_quality: 90
   });
 
-  function previewRetake(id) {
+  function resultRetake(id) {
     Webcam.snap( function(data_uri) {
-        var previewRetake = "";
-        previewRetake += "<h5 class=\"mb-3\">Result Retake</h5>";
-        previewRetake += "<img src=\""+data_uri+"\" alt=\"Result Retake\" id=\"resultRetake\" class=\"pt-3\">";
-        previewRetake += "<button class=\"btn btn-secondary me-2 mt-2\" type=\"button\" onclick=\"saveSnap("+id+")\">Save Image</button><button class=\"btn btn-light border mt-2\" type=\"button\">Retake Image</button></div>"
-        $('#afterRetake').html(previewRetake);
+        var resultRetake = "";
+        resultRetake += "<h5 class=\"mb-3\">Result Retake</h5>";
+        resultRetake += "<img src=\""+data_uri+"\" alt=\"Result Retake\" id=\"resultRetake\" class=\"pt-3\">";
+        resultRetake += "<button class=\"btn btn-secondary me-2 mt-2\" type=\"button\" onclick=\"saveSnap("+id+")\">Save Image</button><button class=\"btn btn-light border mt-2\" type=\"button\" onclick=\"previewRetake("+id+")\">Retake Image</button></div>"
+        $('#afterRetake').html(resultRetake);
     });
   }
 
@@ -171,7 +174,11 @@
           }
         });
       } else {
-        alert("failed");
+        Swal.fire({
+          title: 'Failed!',
+          text: "Terjadi kesalahan saat upload gambar.",
+          icon: 'errors'
+        });
       }
     })
   }
