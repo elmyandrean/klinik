@@ -2,11 +2,13 @@
 
 @section('content')
 <div class="container pt-3">
-  @if($message = Session::get('success'))
-  <div class="alert alert-success" role="alert">
-    <strong>Success!</strong> {{ $message }}
-  </div>
-  @endif
+    @if($message = Session::get('success'))
+    <div class="alert alert-success" role="alert">
+      <strong>Success!</strong> {{ $message }}
+    </div>
+    @endif
+
+    @include('_partials._navmenu_patient')
 
     <div class="card"">
         <div class="card-body">
@@ -177,7 +179,7 @@
         Swal.fire({
           title: 'Failed!',
           text: "Terjadi kesalahan saat upload gambar.",
-          icon: 'errors'
+          icon: 'error'
         });
       }
     })
