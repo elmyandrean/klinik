@@ -78,12 +78,12 @@
                   <div class="row">
                       <div class="col-md-6 text-center">
                         <div class="before-retake" id="leftImage">
-                          <img src="{{ url('upload_images/pic_20220510022244.jpeg') }}" alt="Left Image" height="390">
+                          <img src="{{ url('images/show_image.png') }}" alt="Left Image" height="390">
                         </div>
                       </div>
                       <div class="col-md-6 text-center">
                         <div class="before-retake" id="rightImage">
-                          <img src="{{ url('upload_images/pic_20220510022244.jpeg') }}" alt="Left Image" height="390">
+                          <img src="{{ url('images/show_image.png') }}" alt="Right Image" height="390">
                         </div>
                       </div>
                   </div>
@@ -118,7 +118,7 @@
       var photos = data.photos;
       photos.forEach(function(rslt){
         photos_html += "<div class=\"photo-images\">";
-        photos_html += "<img src=\"{{ url('/') }}/upload_images/"+rslt.name+"\" alt=\"photos\" height=\"85px\" class=\"px-2\">";
+        photos_html += "<img src=\"{{ url('/') }}/upload_images/"+rslt.name+"\" alt=\"photos\" height=\"85px\" class=\"px-2 result-image\" id=\""+rslt.id+"\">";
         photos_html += "<div class=\"text-center mt-1\"><button class=\"btn btn-sm btn-secondary\" type=\"button\" onclick=\"selectImage("+rslt.id+")\">Select</button></div>"
         photos_html += "</div>";
       })
@@ -140,15 +140,30 @@
       $("#selectorBoxRightImage").addClass("btn-light");
       selectedBoxImage = "L"
     }
+
+    console.log(selectedBoxImage);
   }
 
-  function selectImage(){
+  function selectImage(id){
     if(selectedBoxImage == "") {
       Swal.fire({
         title: 'Failed!',
         text: "Silahkan memilih box panel untuk menampilkan gambar terlebih dahulu.",
         icon: 'error'
       });
+
+      return true;
+    }
+
+    var url = $("#"+id).attr("src");
+    var html = "";
+    console.log(selectedBoxImage);
+    if(selectedBoxImage == "L"){
+      html += "<img src=\""+url+"\" alt=\"Left Image\" height=\"390\">";
+      $("#leftImage").html(html);
+    } else if(selectedBoxImage == "R") {
+      html += "<img src=\""+url+"\" alt=\"Right Image\" height=\"390\">";
+      $("#rightImage").html(html);
     }
   }
 </script>
