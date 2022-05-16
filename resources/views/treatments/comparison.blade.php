@@ -162,12 +162,13 @@
     if(selectedBoxImage == "L"){
       html += "<img src=\""+url+"\" alt=\"Left Image\" height=\"390\" class=\"left-image\">";
       $("#leftContainer").html(html);
+      wheelzoom(document.querySelector('.left-image'));
     } else if(selectedBoxImage == "R") {
       html += "<img src=\""+url+"\" alt=\"Right Image\" height=\"390\" class=\"right-image\">";
       $("#rightContainer").html(html);
+      wheelzoom(document.querySelector('.right-image'));
     }
 
-    wheelzoom(document.querySelectorAll('img'));
   }
 </script>
 @endsection
