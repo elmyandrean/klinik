@@ -74,16 +74,16 @@
                     <button class="btn btn-light" id="selectorBoxLeftImage" onclick="selectBoxImage('left')">Select Left Image</button>
                     <button class="btn btn-light" id="selectorBoxRightImage" onclick="selectBoxImage('right')">Select Right Image</button>
                 </div>
-                <div class="card-body" id="foto_user" style="min-height: 400px;">
-                  <div class="row">
+                <div class="card-body" style="min-height: 400px;">
+                  <div class="row" id="fotoUser">
                       <div class="col-md-6 text-center">
-                        <div class="before-retake" id="leftImage">
-                          <img src="{{ url('images/show_image.png') }}" alt="Left Image" height="390">
+                        <div class="before-retake" id="leftContainer">
+                          <img src="{{ url('images/show_image.png') }}" alt="Left Image" height="390" id="leftImage">
                         </div>
                       </div>
                       <div class="col-md-6 text-center">
-                        <div class="before-retake" id="rightImage">
-                          <img src="{{ url('images/show_image.png') }}" alt="Right Image" height="390">
+                        <div class="before-retake" id="rightContainer">
+                          <img src="{{ url('images/show_image.png') }}" alt="Right Image" height="390" class="rightImage">
                         </div>
                       </div>
                   </div>
@@ -96,6 +96,7 @@
 
 @section("scripts")
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ url("libs/wheelzoom/wheelzoom.js") }}"></script>
 <script type="text/javascript">
   var selectedBoxImage = "";
 
@@ -159,12 +160,14 @@
     var html = "";
     console.log(selectedBoxImage);
     if(selectedBoxImage == "L"){
-      html += "<img src=\""+url+"\" alt=\"Left Image\" height=\"390\">";
-      $("#leftImage").html(html);
+      html += "<img src=\""+url+"\" alt=\"Left Image\" height=\"390\" class=\"left-image\">";
+      $("#leftContainer").html(html);
     } else if(selectedBoxImage == "R") {
-      html += "<img src=\""+url+"\" alt=\"Right Image\" height=\"390\">";
-      $("#rightImage").html(html);
+      html += "<img src=\""+url+"\" alt=\"Right Image\" height=\"390\" class=\"right-image\">";
+      $("#rightContainer").html(html);
     }
+
+    wheelzoom(document.querySelectorAll('img'));
   }
 </script>
 @endsection
