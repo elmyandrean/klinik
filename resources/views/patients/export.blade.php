@@ -68,37 +68,32 @@
     </div>
 
     <div class="row pt-3">
-        <div class="col-12">
-            <div class="card">
-                <div class="text-center mt-2">
-                    <button class="btn btn-light" id="selectorBoxLeftImage" onclick="selectBoxImage('left')">Select Left Image</button>
-                    <button class="btn btn-light" id="selectorBoxRightImage" onclick="selectBoxImage('right')">Select Right Image</button>
-                </div>
-                <div class="card-body" style="min-height: 400px;">
-                  <div class="row" id="fotoUser">
-                      <div class="col-md-6 text-center">
-                        <div class="before-retake" id="leftContainer">
-                          <img src="{{ url('images/show_image.png') }}" alt="Left Image" height="390" id="leftImage">
-                        </div>
-                      </div>
-                      <div class="col-md-6 text-center">
-                        <div class="before-retake" id="rightContainer">
-                          <img src="{{ url('images/show_image.png') }}" alt="Right Image" height="390" class="rightImage">
-                        </div>
-                      </div>
-                  </div>
-                </div>
-            </div>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="text-center">Export Photo</h5>
+            <form action="{{ route('exports.download') }}" method="POST" id="formExport">
+              <div class="exported-photo row" style="min-height:300px" id="exportPhoto">
+                
+              </div>
+              <div class="text-center pt-4">
+                <button class="btn btn-secondary" type="submit">Export</button>
+                <button class="btn btn-light border" type="button" onclick="clearData()">Clear Data</button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
 </div>
 @endsection
 
 @section("scripts")
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="{{ url("libs/wheelzoom/wheelzoom.js") }}"></script>
 <script type="text/javascript">
-  var selectedBoxImage = "";
+  $(document).ready(function(){
+    loadExportFoto();
+  })
 
   function getDataTreatment(id){
     $(".clickable-list").removeClass("active");
@@ -127,47 +122,45 @@
     });
   }
 
-  function selectBoxImage(value){
-    if(value == "right"){
-      $("#selectorBoxRightImage").removeClass("btn-light");
-      $("#selectorBoxRightImage").addClass("btn-primary");
-      $("#selectorBoxLeftImage").removeClass("btn-primary");
-      $("#selectorBoxLeftImage").addClass("btn-light");
-      selectedBoxImage = "R"
-    } else {
-      $("#selectorBoxLeftImage").removeClass("btn-light");
-      $("#selectorBoxLeftImage").addClass("btn-primary");
-      $("#selectorBoxRightImage").removeClass("btn-primary");
-      $("#selectorBoxRightImage").addClass("btn-light");
-      selectedBoxImage = "L"
-    }
-
-    console.log(selectedBoxImage);
+  function selectImage(id){
+    $.post('{{ url('patients/export/photo') }}/'+id, function(data, status){
+      loadExportFoto();
+    })
   }
 
-  function selectImage(id){
-    if(selectedBoxImage == "") {
-      Swal.fire({
-        title: 'Failed!',
-        text: "Silahkan memilih box panel untuk menampilkan gambar terlebih dahulu.",
-        icon: 'error'
-      });
+  function loadExportFoto(){
+    $.get('{{ url('patients/export/photo') }}', function(data, status){
+      data = JSON.parse(data);
 
-      return true;
-    }
+      var photos_html = "";
+      data.forEach(function(rslt){
+        photos_html += "<div class=\"col-3 pt-4 text-center\">";
+        photos_html += "<img src=\"{{ url('/') }}/upload_images/"+rslt.name+"\" class=\"img-fluid\">";
+        photos_html += "<input type=\"hidden\" name=\"data[]\" value=\""+rslt.name+"\">";
+        photos_html += "<button class=\"btn btn-secondary mt-3\" type=\"button\" onclick=\"removePhoto('"+rslt.rowId+"')\">Remove</button>";
+        photos_html += "</div>";
+      })
 
-    var url = $("#"+id).attr("src");
-    var html = "";
-    if(selectedBoxImage == "L"){
-      html += "<img src=\""+url+"\" alt=\"Left Image\" height=\"390\" class=\"left-image\">";
-      $("#leftContainer").html(html);
-      wheelzoom(document.querySelector('.left-image'));
-    } else if(selectedBoxImage == "R") {
-      html += "<img src=\""+url+"\" alt=\"Right Image\" height=\"390\" class=\"right-image\">";
-      $("#rightContainer").html(html);
-      wheelzoom(document.querySelector('.right-image'));
-    }
+      $("#exportPhoto").html(photos_html);
+    })
+  }
 
+  function removePhoto(id){
+    $.ajax({
+      data : {_method : "DELETE"},
+      method: "POST",
+      url : "{{ url('patients/export/photo') }}/"+id,
+      success : function(data){
+        console.log(data);
+        loadExportFoto();
+      }
+    })
+  }
+
+  function clearData() {
+    $.post('{{ route('exports.clear') }}', function(data, status){
+      loadExportFoto();
+    })
   }
 </script>
 @endsection

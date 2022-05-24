@@ -92,8 +92,8 @@
 <script src="{{ url('libs/webcamjs/webcam.min.js') }}"></script>
 <script language="JavaScript">
   Webcam.set({
-    width: 480,
-    height: 320,
+    width: 640,
+    height: 360,
     image_format: 'jpeg',
     jpeg_quality: 90
   });

@@ -125,4 +125,12 @@ class PatientController extends Controller
     {
         //
     }
+
+    public function export(Request $request)
+    {
+      $patient = Patient::findOrFail($request->patient_id);
+      return view('patients.export', [
+        'patient' => $patient,
+      ]);
+    }
 }
