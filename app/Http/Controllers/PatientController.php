@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Patient;
+use App\Models\Action;
+use App\Models\Diagnose;
 use App\Models\Photo;
 
 class PatientController extends Controller
@@ -131,6 +133,18 @@ class PatientController extends Controller
       $patient = Patient::findOrFail($request->patient_id);
       return view('patients.export', [
         'patient' => $patient,
+      ]);
+    }
+
+    public function import(Request $request)
+    {
+      $patient = Patient::findOrFail($request->patient_id);
+      $actions = Action::where('status', '=', true)->get();
+      $diagnosis = Diagnose::where('status', '=', true)->get();
+      return view('patients.import', [
+        'patient' => $patient,
+        'actions' => $actions,
+        'diagnosis' => $diagnosis,
       ]);
     }
 }

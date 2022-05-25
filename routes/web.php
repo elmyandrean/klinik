@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ExportPhotoController;
 use App\Http\Controllers\DiagnosesController;
+use App\Http\Controllers\ExportPhotoController;
+use App\Http\Controllers\ImportPhotoController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\TreatmentController;
@@ -33,13 +34,17 @@ Route::middleware('auth')->group(function(){
   Route::post('patients/photos/update_images', [PhotoController::class, 'update_image'])->name('photos.update_image');
   Route::delete('patients/photos/delete_image', [PhotoController::class, 'delete_image'])->name('photos.delete_image');
   Route::get('patients/photos/{id}', [PhotoController::class, 'get_photo'])->name('photos.get_photo');
-
+  
   Route::get('patients/export/photo', [ExportPhotoController::class, 'index'])->name('exports.index');
   Route::post('patients/export/photo/clear', [ExportPhotoController::class, 'clear'])->name('exports.clear');
   Route::post('patients/export/photo/download', [ExportPhotoController::class, 'download'])->name('exports.download');
   Route::post('patients/export/photo/{id}', [ExportPhotoController::class, 'add'])->name('exports.add');
   Route::delete('patients/export/photo/{id}', [ExportPhotoController::class, 'delete'])->name('exports.delete');
 
+  Route::post('patients/import/data', [ImportPhotoController::class, 'store_data'])->name('imports.data');
+  Route::post('patients/import/photo', [ImportPhotoController::class, 'store_image'])->name('imports.photo');
+  
+  Route::get('patient/import', [PatientController::class, 'import'])->name('patients.import');
   Route::get('patients/export', [PatientController::class, 'export'])->name('patients.export');
   Route::resource('patients', PatientController::class);
   Route::resource('actions', ActionController::class);
