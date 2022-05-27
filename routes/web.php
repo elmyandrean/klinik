@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function(){
   Route::delete('patients/export/photo/{id}', [ExportPhotoController::class, 'delete'])->name('exports.delete');
 
   Route::post('patients/import/data', [ImportPhotoController::class, 'store_data'])->name('imports.data');
-  Route::post('patients/import/photo', [ImportPhotoController::class, 'store_image'])->name('imports.photo');
+  Route::post('patients/import/photo', [ImportPhotoController::class, 'store_photo'])->name('imports.photo');
   
   Route::get('patient/import', [PatientController::class, 'import'])->name('patients.import');
   Route::get('patients/export', [PatientController::class, 'export'])->name('patients.export');

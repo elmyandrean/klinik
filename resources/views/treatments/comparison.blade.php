@@ -58,7 +58,7 @@
                         <div class="col-6">
                             <h5>Photos</h5>
                             <div class="row">
-                                <div id="photos" class="d-flex align-items-center">
+                                <div id="photos" class="d-flex flex-wrap" style="overflow-y: scroll; height: 140px;">
                                   
                                 </div>
                             </div>
@@ -120,7 +120,7 @@
       var photos_html = "";
       var photos = data.photos;
       photos.forEach(function(rslt){
-        photos_html += "<div class=\"photo-images\">";
+        photos_html += "<div class=\"photo-images pb-2\">";
         photos_html += "<img src=\"{{ url('/') }}/upload_images/"+rslt.name+"\" alt=\"photos\" height=\"85px\" class=\"px-2 result-image\" id=\""+rslt.id+"\">";
         photos_html += "<div class=\"text-center mt-1\"><button class=\"btn btn-sm btn-secondary\" type=\"button\" onclick=\"selectImage("+rslt.id+")\">Select</button></div>"
         photos_html += "</div>";

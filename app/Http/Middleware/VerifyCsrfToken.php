@@ -16,5 +16,6 @@ class VerifyCsrfToken extends Middleware
         'patients/photos/update_images',
         'patients/photos/delete_image',
         'patients/export/photo/*',
+        'patients/import/photo',
     ];
 }

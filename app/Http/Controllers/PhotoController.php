@@ -58,7 +58,7 @@ class PhotoController extends Controller
         File::delete($image_path);
       }
 
-      $filename = 'pic_'.date('YmdHis').'.jpeg';
+      $filename = 'pic_'.rand().'_'.date('YmdHis').'.jpeg';
       $filepath = public_path('upload_images/');
 
       if(move_uploaded_file($_FILES['webcam']['tmp_name'],$filepath.$filename)){
