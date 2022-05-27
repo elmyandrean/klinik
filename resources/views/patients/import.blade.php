@@ -101,7 +101,7 @@
                             </div>
                   		</div>
                   		<div class="form-group">
-	        				<button type="submit" class="btn btn-md btn-primary">create</button>
+	        				<button type="submit" class="btn btn-md btn-primary">Import Data</button>
 	        			</div>
 					</form>
                 </div>
@@ -141,13 +141,14 @@
     $(function() {
     var myDropzone = new Dropzone("div#dropzoneDragArea", { 
         paramName: "file",
-        url: "{{ url('/patients/import/photo') }}",
+        url: "{{ route('imports.photo') }}",
         previewsContainer: 'div.dropzone-previews',
         addRemoveLinks: true,
         autoProcessQueue: false,
         uploadMultiple: false,
         parallelUploads: 5,
         maxFiles: 5,
+        acceptedFiles: ".jpeg,.jpg,.png,.gif",
         params: {
             _token: token
         },
@@ -165,14 +166,15 @@
                     url: URL,
                     data: formData,
                     success: function(result){
+                        console.log(result.status);
                         if(result.status == "success"){
                             // fetch the useid 
-                            var userid = result.user_id;
-                            $("#userid").val(userid); // inseting userid into hidden input field
+                            var treatment_id = result.treatment_id;
+                            $("#treatment_id").val(treatment_id); // inseting userid into hidden input field
                             //process the queue
                             myDropzone.processQueue();
                         }else{
-                            console.log("error");
+                            // console.log(result);
                         }
                     }
                 });
