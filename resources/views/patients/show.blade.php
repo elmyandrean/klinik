@@ -1,5 +1,7 @@
 @extends('template')
 
+@section('title', 'Retake Photo')
+
 @section('content')
 <div class="container pt-3">
     @if($message = Session::get('success'))

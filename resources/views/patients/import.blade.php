@@ -1,5 +1,7 @@
 @extends('template')
 
+@section('title', 'Import Photo')
+
 @section('styles')
 <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 <style>
@@ -66,7 +68,8 @@
 						<div class="mb-3 row">
                             <label for="treatment_date" class="col-2 col-form-label">Tanggal Treatment</label>
                             <div class="col-2">
-                                <input type="date" name="treatment_date" id="treatment_date" class="form-control">
+                                <input type="date" name="treatment_date" id="treatment_date" class="form-control" onchange="checkTreatment(this.value)">
+                                <input type="hidden" name="treatment_id" id="treatment_id">
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -112,83 +115,103 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <script>
+    function checkTreatment(date){
+        $.ajax({
+            url : '{{ route('treatments.get_by_date') }}',
+            method : 'GET',
+            data : {patient_id : {{ $patient->id }}, created_at : date},
+            success : function(rslt){
+                if(rslt != 'null'){
+                    rslt = JSON.parse(rslt);
+                    $("#treatment_diagnose").val(rslt.diagnose_id);
+                    $("#treatment_name").val(rslt.action_id);
+                    $("#treatment_id").val(rslt.id);
+                } else {
+                    $('#treatment_diagnose').prop('selectedIndex',0);
+                    $('#treatment_name').prop('selectedIndex',0);
+                    $("#treatment_id").val("");
+                }
+            }
+        })
+    }
+
     Dropzone.autoDiscover = false;
-// Dropzone.options.demoform = false;	
-let token = $('meta[name="csrf-token"]').attr('content');
-$(function() {
-var myDropzone = new Dropzone("div#dropzoneDragArea", { 
-	paramName: "file",
-	url: "{{ url('/patients/import/photo') }}",
-	previewsContainer: 'div.dropzone-previews',
-	addRemoveLinks: true,
-	autoProcessQueue: false,
-	uploadMultiple: false,
-	parallelUploads: 5,
-	maxFiles: 5,
-	params: {
-        _token: token
-    },
-	 // The setting up of the dropzone
-	init: function() {
-	    var myDropzone = this;
-	    //form submission code goes here
-	    $("form[name='demoform']").submit(function(event) {
-	    	//Make sure that the form isn't actully being sent.
-	    	event.preventDefault();
-	    	URL = $("#demoform").attr('action');
-	    	formData = $('#demoform').serialize();
-	    	$.ajax({
-	    		type: 'POST',
-	    		url: URL,
-	    		data: formData,
-	    		success: function(result){
-	    			if(result.status == "success"){
-	    				// fetch the useid 
-	    				var userid = result.user_id;
-						$("#userid").val(userid); // inseting userid into hidden input field
-	    				//process the queue
-	    				myDropzone.processQueue();
-	    			}else{
-	    				console.log("error");
-	    			}
-	    		}
-	    	});
-	    });
-	    //Gets triggered when we submit the image.
-	    this.on('sending', function(file, xhr, formData){
-	    //fetch the user id from hidden input field and send that userid with our image
-	      let userid = document.getElementById('userid').value;
-		   formData.append('userid', userid);
-		});
-		
-	    this.on("success", function (file, response) {
-            //reset the form
-            $('#demoform')[0].reset();
-            //reset dropzone
-            $('.dropzone-previews').empty();
+    // Dropzone.options.demoform = false;	
+    let token = $('meta[name="csrf-token"]').attr('content');
+    $(function() {
+    var myDropzone = new Dropzone("div#dropzoneDragArea", { 
+        paramName: "file",
+        url: "{{ url('/patients/import/photo') }}",
+        previewsContainer: 'div.dropzone-previews',
+        addRemoveLinks: true,
+        autoProcessQueue: false,
+        uploadMultiple: false,
+        parallelUploads: 5,
+        maxFiles: 5,
+        params: {
+            _token: token
+        },
+        // The setting up of the dropzone
+        init: function() {
+            var myDropzone = this;
+            //form submission code goes here
+            $("form[name='demoform']").submit(function(event) {
+                //Make sure that the form isn't actully being sent.
+                event.preventDefault();
+                URL = $("#demoform").attr('action');
+                formData = $('#demoform').serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: URL,
+                    data: formData,
+                    success: function(result){
+                        if(result.status == "success"){
+                            // fetch the useid 
+                            var userid = result.user_id;
+                            $("#userid").val(userid); // inseting userid into hidden input field
+                            //process the queue
+                            myDropzone.processQueue();
+                        }else{
+                            console.log("error");
+                        }
+                    }
+                });
+            });
+            //Gets triggered when we submit the image.
+            this.on('sending', function(file, xhr, formData){
+            //fetch the user id from hidden input field and send that userid with our image
+            let userid = document.getElementById('userid').value;
+            formData.append('userid', userid);
+            });
+            
+            this.on("success", function (file, response) {
+                //reset the form
+                $('#demoform')[0].reset();
+                //reset dropzone
+                $('.dropzone-previews').empty();
+            });
+            this.on("queuecomplete", function () {
+            
+            });
+            
+            // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+            // of the sending event because uploadMultiple is set to true.
+            this.on("sendingmultiple", function() {
+            // Gets triggered when the form is actually being sent.
+            // Hide the success button or the complete form.
+            });
+            
+            this.on("successmultiple", function(files, response) {
+            // Gets triggered when the files have successfully been sent.
+            // Redirect user or notify of success.
+            });
+            
+            this.on("errormultiple", function(files, response) {
+            // Gets triggered when there was an error sending the files.
+            // Maybe show form again, and notify user of error
+            });
+        }
         });
-        this.on("queuecomplete", function () {
-		
-        });
-		
-        // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
-	    // of the sending event because uploadMultiple is set to true.
-	    this.on("sendingmultiple", function() {
-	      // Gets triggered when the form is actually being sent.
-	      // Hide the success button or the complete form.
-	    });
-		
-	    this.on("successmultiple", function(files, response) {
-	      // Gets triggered when the files have successfully been sent.
-	      // Redirect user or notify of success.
-	    });
-		
-	    this.on("errormultiple", function(files, response) {
-	      // Gets triggered when there was an error sending the files.
-	      // Maybe show form again, and notify user of error
-	    });
-	}
-	});
-});
+    });
 </script>
 @endsection

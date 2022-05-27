@@ -10,6 +10,8 @@ use App\Models\Photo;
 use App\Models\Treatment;
 use Illuminate\Support\Facades\Validator;
 
+use DB;
+
 class TreatmentController extends Controller
 {
     /**
@@ -144,5 +146,11 @@ class TreatmentController extends Controller
       $treatments = Treatment::findOrFail($request->id);
 
       return json_encode($treatments->photos, 200);
+    }
+
+    public function get_by_date(Request $request){
+      $treatment = Treatment::where([['patient_id', '=', $request->patient_id], ['created_at', 'like', ''.$request->created_at.'%']])->first();
+
+      return json_encode($treatment, 200);
     }
 }

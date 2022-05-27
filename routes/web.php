@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function(){
   Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
   Route::get('patients/treatments/comparison', [TreatmentController::class, 'comparison'])->name('treatments.comparison');
   Route::get('patients/treatments/get_photos', [TreatmentController::class, 'get_photos'])->name('treatments.get_photos');
+  Route::get('patients/treatments/get_by_date', [TreatmentController::class, 'get_by_date'])->name('treatments.get_by_date');
   Route::resource('patients/treatments', TreatmentController::class);
   Route::post('/logout_action', [AuthController::class, 'logout_action'])->name('logout_action');
 
