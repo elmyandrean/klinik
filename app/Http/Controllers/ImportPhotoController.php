@@ -28,6 +28,7 @@ class ImportPhotoController extends Controller
             $treatment->diagnose_id = $request->treatment_diagnose;
             $treatment->notes = $request->treatment_notes;
             $treatment->patient_id = $request->patient_id;
+            $treatment->created_at = $request->treatment_date;
             $treatment->save();
 
             return response()->json(['status' => "success", 'treatment_id' => $treatment->id], 200);

@@ -158,14 +158,17 @@
             });
             
             this.on("success", function (file, response) {
-                //reset the form
                 $('#demoform')[0].reset();
-                //reset dropzone
                 $('.dropzone-previews').empty();
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Yeay!',
+                  text: 'You have success to import photo!',
+                })
             });
 
             this.on("queuecomplete", function () {
-            
+              //
             });
             
             this.on("sendingmultiple", function() {
