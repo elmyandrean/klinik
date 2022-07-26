@@ -161,11 +161,11 @@
     var url = $("#"+id).attr("src");
     var html = "";
     if(selectedBoxImage == "L"){
-      html += "<img src=\""+url+"\" alt=\"Left Image\" height=\"390\" class=\"left-image\">";
+      html += "<img src=\""+url+"\" alt=\"Left Image\" height=\"390\" class=\"left-image img-fluid\">";
       $("#leftContainer").html(html);
       wheelzoom(document.querySelector('.left-image'));
     } else if(selectedBoxImage == "R") {
-      html += "<img src=\""+url+"\" alt=\"Right Image\" height=\"390\" class=\"right-image\">";
+      html += "<img src=\""+url+"\" alt=\"Right Image\" height=\"390\" class=\"right-image img-fluid\">";
       $("#rightContainer").html(html);
       wheelzoom(document.querySelector('.right-image'));
     }
